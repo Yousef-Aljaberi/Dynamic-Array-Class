@@ -13,9 +13,11 @@ private:
 
 protected:
 
-	T* OriginalArry;
+	T* _TempArray;
 
 public:
+	T* OriginalArry;
+
 	clsDaynamicArry(int Size = 0)
 	{
 		if (Size < 0)
@@ -62,31 +64,107 @@ public:
 		cout << "\n";
 	}
 
-	void Resize(int Size)
+	void Resize(int NewSize)
 	{
-		if ((Size == _Size) || (Size < 0 ))
+		if (NewSize < 0)
+			NewSize = 0;
+		
+		//limit the original size to the new size if it is less
+		if (NewSize < _Size)
+			_Size = NewSize;
+
+		_TempArray =new T[NewSize];
+
+		for (int i = 0; i < _Size; i++)
 		{
-			return;
+			_TempArray[i] = OriginalArry[i];
 		}
 
-		T* NewArry =new T[Size];
-
-		for (int i = 0; i < Size; i++)
-		{
-			NewArry[i] = OriginalArry[i];
-		}
-
-		_Size = Size;
+		_Size = NewSize;
 
 		delete[]  OriginalArry;
 
-		OriginalArry = NewArry;
+		OriginalArry = _TempArray;
+	}
 
-
+	T GetItem(int Index)
+	{
+		if (!(Index < 0 || Index>_Size))
+		{
+			return OriginalArry[Index];
+		}
 
 	}
 
+	void Reverse()
+	{
+		T Temp;
 
+		int midSize = _Size / 2;
 
+		for (int i = 0; i <midSize ; i++)
+		{
+			
+			swap(OriginalArry[i], OriginalArry[_Size - 1 - i]);
+			
+		}
+	}
+
+	void Clear()
+	{
+		_Size = 0;
+		_TempArray = new T[0];
+		delete[] OriginalArry;
+
+		OriginalArry = _TempArray;
+	}
+
+	bool DeleteItemAt(int Index)
+	{
+		if (Index < 0 || Index >= _Size)
+			return false;
+
+		_Size--;
+
+		_TempArray = new T[_Size];
+
+		for (int i = 0; i < Index; i++)
+		{
+			_TempArray[i] = OriginalArry[i];
+		}
+		
+		for (int i = Index+1; i <_Size + 1; i++)
+		{
+			_TempArray[i - 1] = OriginalArry[i];
+		}
+
+		delete[] OriginalArry;
+		OriginalArry = _TempArray;
+
+		return true;
+	}
+
+	bool DeleteFirstItem()
+	{
+		if (DeleteItemAt(0))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool DeleteLastItem()
+	{
+		int index = _Size - 1;
+
+		if (DeleteItemAt(index))
+		{
+			return true;
+		}
+
+		return false;
+		
+	}
 };
 
