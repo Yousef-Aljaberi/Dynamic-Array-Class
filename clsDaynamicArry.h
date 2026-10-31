@@ -1,47 +1,90 @@
 #pragma once
+#include<iostream>
+
+using namespace std;
 
 template <class T>
 
 class clsDaynamicArry
 {
 private:
-	int _Size;
-	int _Count = 0;
+
+	int _Size = 0;
+
 protected:
-	T* _MyArry;
+
+	T* OriginalArry;
 
 public:
-	clsDaynamicArry(int Size)
+	clsDaynamicArry(int Size = 0)
 	{
-		
+		if (Size < 0)
+			Size = 0;
+
 		_Size = Size;
-		_MyArry = new[_Size];
+		OriginalArry = new T[_Size];
 		
 	}
 
-	void SetItem(int Index, T Value)
+	~clsDaynamicArry()
 	{
-		if (Index >= 0 && Index < _Size)
+		delete[]  OriginalArry;
+	}
+
+	bool SetItem(int Index, T Value)
+	{
+		if (Index >= _Size &&  _Size != 0)
 		{
-			_MyArry[Index] = Value;
-			_Count++;
+			return false;
 		}
+
+		OriginalArry[Index] = Value;
+		return true;
 	}
 
 	bool IsEmpty()
 	{
-		return (_Count == 0 ? true : false);
+		return (_Size == 0 ? true : false);
 	}
+
+	int Size()
+	{
+		return _Size;
+	}
+
 
 	void PrintList()
 	{
-		for (int i = 0; i <= _Size; i++)
+		for (int i = 0; i <= _Size - 1; i++)
 		{
-			cout << _MyArry[i] << " ";
+			cout << OriginalArry[i] << " ";
 		}
+		cout << "\n";
 	}
 
+	void Resize(int Size)
+	{
+		if ((Size == _Size) || (Size < 0 ))
+		{
+			return;
+		}
 
+		T* NewArry =new T[Size];
+
+		for (int i = 0; i < Size; i++)
+		{
+			NewArry[i] = OriginalArry[i];
+		}
+
+		_Size = Size;
+
+		delete[]  OriginalArry;
+
+		OriginalArry = NewArry;
+
+
+
+	}
 
 
 
