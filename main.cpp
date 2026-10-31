@@ -22,7 +22,6 @@ int main()
 
 	MyDaynamicArry.PrintList();
 
-	//MyDaynamicArry.Resize(3);
 
 	cout << "\n\nArray Size: " << MyDaynamicArry.Size();
 	cout << "\n\nArray Items after resize: \n";
@@ -31,24 +30,36 @@ int main()
 
 	cout << "\n\nItem(2): " << MyDaynamicArry.GetItem(2);
 
-	MyDaynamicArry.Reverse();
+	int index = MyDaynamicArry.Find(30);
 
-	cout << "\n\nArry after revers: \n";
+	if (index != -1)
+		cout << "\n\nItem  found." << endl;
+	else
+		cout << "\n\nItem not found." << endl;
+
+	MyDaynamicArry.DeleteItem(30);
+
+	cout << "\n\nArray after delete item 30: " << endl;
 	MyDaynamicArry.PrintList();
 
-	MyDaynamicArry.DeleteItemAt(2);
-
-	cout << "\n\nArray after delete item 2:\n";
+	cout << "\n\n after insert in index 2\n";
+	MyDaynamicArry.InsertAt(2, 39);
 	MyDaynamicArry.PrintList();
-
-	MyDaynamicArry.DeleteFirstItem();
-
-	cout << "\n\nArray after delete First item:\n";
+	
+	cout << "\n\n after insert at beginning\n";
+	MyDaynamicArry.InsertAtBeginning(100);
 	MyDaynamicArry.PrintList();
-
-	MyDaynamicArry.DeleteLastItem();
-
-	cout << "\n\nArray after delete last item :\n";
+	
+	cout << "\n\n after insert after 2 \n";
+	MyDaynamicArry.InsertAfter(2, 200);
+	MyDaynamicArry.PrintList();
+	
+	cout << "\n\n after insert before\n";
+	MyDaynamicArry.InsertAt(2, 300);
+	MyDaynamicArry.PrintList();
+	
+	cout << "\n\n after insert at end\n";
+	MyDaynamicArry.InsertAtEnd(300);
 	MyDaynamicArry.PrintList();
 
 

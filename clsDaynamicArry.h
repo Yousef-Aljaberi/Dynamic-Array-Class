@@ -119,6 +119,19 @@ public:
 		OriginalArry = _TempArray;
 	}
 
+	int Find(T Value)
+	{
+		for (int i = 0; i < _Size; i++)
+		{
+			if (OriginalArry[i] == Value)
+				return i;
+		}
+
+		return -1;
+	}
+
+	//---------------------------------
+
 	bool DeleteItemAt(int Index)
 	{
 		if (Index < 0 || Index >= _Size)
@@ -144,27 +157,75 @@ public:
 		return true;
 	}
 
-	bool DeleteFirstItem()
+	void DeleteFirstItem()
 	{
-		if (DeleteItemAt(0))
+		DeleteItemAt(0);
+
+	}
+
+	void DeleteLastItem()
+	{
+		DeleteItemAt(_Size - 1);	
+	}
+
+	bool DeleteItem(T Value)
+	{
+		int Index = Find(Value);
+
+		if (Index != -1)
 		{
+			DeleteItemAt(Index);
 			return true;
 		}
-
 		return false;
 	}
 
-	bool DeleteLastItem()
+	//-----------------------------------
+	bool InsertAt(int Index, T Value)
 	{
-		int index = _Size - 1;
+		if (Index < 0 || Index > _Size)
+			return false;
 
-		if (DeleteItemAt(index))
+		_TempArray = new T[_Size + 1];
+
+		for (int i = 0; i < Index; i++)
 		{
-			return true;
+			_TempArray[i] = OriginalArry[i];
 		}
 
-		return false;
-		
+		_TempArray[Index] = Value;
+
+		for (int i = Index; i < _Size; i++)
+		{
+			_TempArray[i + 1] = OriginalArry[i];
+		}
+
+		delete[] OriginalArry;
+		OriginalArry = _TempArray;
+
+		_Size++;
+
+		return true;
+	}
+
+	void InsertAtBeginning(T Value)
+	{
+		InsertAt(0, Value);
+	}
+
+	void InsertAfter(int Index, T Value)
+	{
+		InsertAt(Index + 1, Value);
+	}
+
+	void InsertBefore(int Index, T Value)
+	{
+		InsertAt(Index - 1, Value);
+	}
+
+	void InsertAtEnd(T Value)
+	{
+		InsertAt(_Size, Value);
 	}
 };
 
